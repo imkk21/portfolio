@@ -251,7 +251,7 @@ function Skills() {
       <div style={{ maxWidth:1200, margin:"0 auto" }}>
         <SectionLabel num="02" text="Skills" col="#3b82f6" vis={vis} />
         <h2 style={{ fontFamily:"'Inter',sans-serif", fontWeight:800, fontSize:"clamp(2rem,4.5vw,3.2rem)", color:"#f1f5f9", margin:"0.3rem 0 2.8rem", letterSpacing:"-0.03em", opacity:vis?1:0, transform:vis?"none":"translateY(16px)", transition:"all 0.6s ease" }}>
-          Technical Arsenal
+          Technical Skills
         </h2>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(200px,1fr))", gap:"0.9rem" }}>
           {SKILLS.map((g,i)=>(
