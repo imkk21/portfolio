@@ -321,7 +321,7 @@ function Projects() {
       <div style={{ maxWidth:1200, margin:"0 auto" }}>
         <SectionLabel num="03" text="Projects" col="#8b5cf6" vis={vis} />
         <h2 style={{ fontFamily:"'Inter',sans-serif", fontWeight:800, fontSize:"clamp(2rem,4.5vw,3.2rem)", color:"#f1f5f9", margin:"0.3rem 0 2.8rem", letterSpacing:"-0.03em", opacity:vis?1:0, transform:vis?"none":"translateY(16px)", transition:"all 0.6s ease" }}>
-          Things I've Built
+          Projects I've Built
         </h2>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(290px,1fr))", gap:"1rem" }}>
           {PROJECTS.map((p,i)=><ProjCard key={p.name} p={p} i={i} vis={vis} />)}
