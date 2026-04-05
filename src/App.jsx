@@ -16,15 +16,15 @@ const PROJECTS = [
   { name:"Insightify", emoji:"🔭", col:"#3b82f6",
     desc:"Pulls your GitHub activity, live weather & tech news, then uses Google Gemini AI to create a smart weekly developer digest.",
     stack:["React","Node.js","MongoDB","Firebase","Gemini AI","Vite","Tailwind"],
-    link:"https://github.com/imkk21/Insightify", cta:"GitHub" },
+    link:"https://insightifyweb.vercel.app", cta:"Live" },
   { name:"ShareItz", emoji:"⚡", col:"#8b5cf6",
     desc:"Paste text, get a shareable link instantly — no sign-ups, no friction. TypeScript-first, deployed globally on Vercel.",
     stack:["Next.js","TypeScript","Firebase","Tailwind CSS","Vercel"],
-    link:"https://shareitz.vercel.app", cta:"Live Demo" },
+    link:"https://shareitz.vercel.app", cta:"Live" },
   { name:"DevSync", emoji:"🔗", col:"#10b981",
     desc:"Real-time code collaboration — multiple developers write and edit code together, powered by Supabase and the Judge0 API.",
     stack:["Supabase","JavaScript","Judge0 API"],
-    link:"https://github.com/imkk21/devsync", cta:"GitHub" },
+    link:"https://devsyncide.vercel.app", cta:"Live" },
   { name:"CityShop", emoji:"🛒", col:"#f59e0b",
     desc:"Mobile-first shopping app built with React Native — browse products, manage your cart, and log in securely.",
     stack:["React Native","Supabase","JavaScript","Android Studio"],
@@ -32,7 +32,7 @@ const PROJECTS = [
   { name:"DocFlow", emoji:"📄", col:"#ef4444",
     desc:"Upload a doc, watch AI extract what matters, review and edit it, then export — with live progress via Redis Pub/Sub.",
     stack:["React","FastAPI","PostgreSQL","Celery","Redis","TypeScript","Docker"],
-    link:"https://github.com/imkk21/dockflow", cta:"GitHub" },
+    link:"https://github.com/imkk21/docflow", cta:"GitHub" },
 ];
 
 function useVisible(threshold = 0.1) {
