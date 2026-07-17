@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion as Motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
 
-export default function Navbar({ theme, toggleTheme }) {
+export default function Navbar({ theme, toggleTheme, activeMode }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -14,9 +14,19 @@ export default function Navbar({ theme, toggleTheme }) {
 
   const links = ["About", "Skills", "Projects", "Contact"];
 
+  const getModeLabel = (mode) => {
+    switch (mode) {
+      case "fullstack": return "Full-Stack";
+      case "aiml": return "AI / ML";
+      case "security": return "Security";
+      case "data": return "DevOps";
+      default: return "Full-Stack";
+    }
+  };
+
   return (
     <>
-      <motion.nav
+      <Motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -28,15 +38,31 @@ export default function Navbar({ theme, toggleTheme }) {
           zIndex: 999,
           padding: "20px 0",
           transition: "all 0.5s ease",
-          background: scrolled ? "var(--bg-primary)" : "transparent",
-          backdropFilter: scrolled ? "blur(10px)" : "none",
+          background: scrolled ? "var(--glass-bg)" : "transparent",
+          backdropFilter: scrolled ? "blur(16px)" : "none",
           borderBottom: scrolled ? "1px solid var(--border-color)" : "1px solid transparent",
         }}
       >
         <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 40px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           
-          <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-            <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 800, fontSize: "1.5rem", color: "var(--text-primary)" }}>K.</span>
+          {/* Logo with Mode Badge */}
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 800, fontSize: "1.4rem", color: "var(--text-primary)", letterSpacing: "1px" }}>
+              KUNAL KUMAR
+            </span>
+            <span style={{ 
+              fontFamily: "'Fira Code', monospace", 
+              fontSize: "0.7rem", 
+              fontWeight: 500, 
+              color: "var(--accent-mode)", 
+              border: "1px solid var(--accent-mode)", 
+              padding: "2px 8px", 
+              borderRadius: "4px",
+              background: "var(--accent-mode-glow)",
+              transition: "all 0.4s ease"
+            }}>
+              {getModeLabel(activeMode).toUpperCase()}
+            </span>
           </div>
 
           {/* Desktop Links */}
@@ -44,7 +70,7 @@ export default function Navbar({ theme, toggleTheme }) {
             <style>{`@media (max-width: 768px) { .desktop-nav { display: none !important; } }`}</style>
             {links.map((link) => (
               <a key={link} href={`#${link.toLowerCase()}`} style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.75rem", fontWeight: 600, letterSpacing: "2px", textTransform: "uppercase", color: "var(--text-secondary)", transition: "color 0.3s" }}
-                onMouseEnter={e => e.target.style.color = "var(--accent-gold)"}
+                onMouseEnter={e => e.target.style.color = "var(--accent-mode)"}
                 onMouseLeave={e => e.target.style.color = "var(--text-secondary)"}
               >
                 {link}
@@ -59,12 +85,12 @@ export default function Navbar({ theme, toggleTheme }) {
             {menuOpen ? "CLOSE" : "MENU"}
           </button>
         </div>
-      </motion.nav>
+      </Motion.nav>
 
       {/* Mobile Dropdown */}
       <AnimatePresence>
         {menuOpen && (
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -76,7 +102,7 @@ export default function Navbar({ theme, toggleTheme }) {
                 {link}
               </a>
             ))}
-          </motion.div>
+          </Motion.div>
         )}
       </AnimatePresence>
     </>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 
 export default function CustomCursor() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -45,7 +45,7 @@ export default function CustomCursor() {
           .custom-cursor { display: none !important; }
         }
       `}</style>
-      <motion.div
+      <Motion.div
         className="custom-cursor"
         animate={{
           x: mousePosition.x - 16,
@@ -70,13 +70,13 @@ export default function CustomCursor() {
         }}
       >
         {isHovering && (
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             style={{ width: 4, height: 4, borderRadius: "50%", background: "#fff" }}
           />
         )}
-      </motion.div>
+      </Motion.div>
     </>
   );
 }

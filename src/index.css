@@ -1,41 +1,75 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap');
 
 :root {
-  /* Default Dark Mode Theme */
-  --bg-primary: #0f111a;
-  --bg-secondary: #161822;
-  --bg-tertiary: #1e212b;
+  /* Premium Dark Theme */
+  --bg-primary: #07080d;
+  --bg-secondary: #0f111a;
+  --bg-tertiary: #171926;
   
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-tertiary: #64748b;
   
-  --accent-gold: #3b82f6; /* Swapped to a vibrant blue instead of gold for a cleaner look */
-  --accent-crimson: #8b5cf6; /* Swapped to purple */
+  /* Accent Colors */
+  --accent-blue: #3b82f6;
+  --accent-purple: #a855f7;
+  --accent-green: #10b981;
+  --accent-cyan: #06b6d4;
+  --accent-gold: #f59e0b;
   
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-light: rgba(255, 255, 255, 0.15);
+  /* Active Mode Accent (Dynamic via CSS or JS class) */
+  --accent-mode: var(--accent-blue);
+  --accent-mode-glow: rgba(59, 130, 246, 0.15);
   
-  --glass-bg: rgba(255, 255, 255, 0.02);
+  --border-color: rgba(255, 255, 255, 0.05);
+  --border-light: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(15, 17, 26, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --card-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+  
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Outfit', sans-serif;
+  --font-mono: 'Fira Code', monospace;
+  --watermark-color: rgba(255, 255, 255, 0.015);
 }
 
 [data-theme="light"] {
-  /* Light Mode Theme */
-  --bg-primary: #fafafa;
-  --bg-secondary: #f0f0f0;
-  --bg-tertiary: #e5e5e5;
+  /* Premium Light Theme */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
   
-  --text-primary: #171717;
-  --text-secondary: #525252;
-  --text-tertiary: #737373;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-tertiary: #64748b;
   
-  --accent-gold: #2563eb;
-  --accent-crimson: #7c3aed;
-  
-  --border-color: rgba(0, 0, 0, 0.08);
-  --border-light: rgba(0, 0, 0, 0.15);
-  
-  --glass-bg: rgba(0, 0, 0, 0.02);
+  --border-color: rgba(15, 23, 42, 0.08);
+  --border-light: rgba(15, 23, 42, 0.12);
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(15, 23, 42, 0.06);
+  --card-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.08);
+  --watermark-color: rgba(0, 0, 0, 0.015);
+}
+
+/* Theme Classes dynamically controlled by JS */
+.mode-fullstack {
+  --accent-mode: var(--accent-blue);
+  --accent-mode-glow: rgba(59, 130, 246, 0.2);
+}
+
+.mode-aiml {
+  --accent-mode: var(--accent-purple);
+  --accent-mode-glow: rgba(168, 85, 247, 0.2);
+}
+
+.mode-security {
+  --accent-mode: var(--accent-green);
+  --accent-mode-glow: rgba(16, 185, 129, 0.2);
+}
+
+.mode-data {
+  --accent-mode: var(--accent-cyan);
+  --accent-mode-glow: rgba(6, 182, 212, 0.2);
 }
 
 *, *::before, *::after {
@@ -48,18 +82,22 @@ html {
   scroll-behavior: smooth;
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  transition: background-color 0.4s ease, color 0.4s ease;
+  font-size: 16px;
+  overflow-x: hidden;
 }
 
 body {
   overflow-x: hidden;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-secondary);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-display);
+  color: var(--text-primary);
   font-weight: 700;
   letter-spacing: -0.02em;
 }
@@ -67,53 +105,89 @@ h1, h2, h3, h4, h5, h6 {
 a {
   text-decoration: none;
   color: inherit;
+  transition: all 0.3s ease;
 }
 
-ul {
-  list-style: none;
-}
-
-::selection {
-  background: var(--accent-gold);
-  color: #fff;
+button {
+  background: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-light);
+  background: var(--bg-tertiary);
+  border: 2px solid var(--bg-primary);
   border-radius: 4px;
 }
-
-/* Utilities */
-.text-gold {
-  color: var(--accent-gold);
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-mode);
 }
 
-.text-crimson {
-  color: var(--accent-crimson);
+::selection {
+  background: var(--accent-mode);
+  color: #fff;
 }
 
+/* Layout Utilities */
 .section-container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 120px 40px;
 }
 
-.line-accent {
-  width: 60px;
-  height: 2px;
-  background-color: var(--accent-gold);
-  display: inline-block;
-  margin-bottom: 8px;
+@media (max-width: 768px) {
+  .section-container {
+    padding: 80px 20px;
+  }
 }
 
-/* Marquee Animation */
+.line-accent {
+  width: 40px;
+  height: 2px;
+  background-color: var(--accent-mode);
+  display: inline-block;
+  margin-bottom: 12px;
+  transition: background-color 0.4s ease, width 0.4s ease;
+}
+
+/* Glowing Elements */
+.glow-text {
+  text-shadow: 0 0 20px var(--accent-mode-glow);
+}
+
+.glow-box {
+  box-shadow: 0 0 30px var(--accent-mode-glow);
+}
+
+/* Particle Overlay */
+.particles-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.4;
+}
+
+/* Glassmorphic elements */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+}
+
+/* Infinite Marquee */
 @keyframes marquee {
   0% { transform: translateX(0%); }
   100% { transform: translateX(-50%); }
@@ -123,13 +197,103 @@ ul {
   overflow: hidden;
   display: flex;
   white-space: nowrap;
+  position: relative;
+}
+
+.marquee-container::before,
+.marquee-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.marquee-container::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg-primary), transparent);
+}
+
+.marquee-container::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg-primary), transparent);
 }
 
 .marquee-content {
   display: flex;
-  animation: marquee 40s linear infinite;
+  animation: marquee 30s linear infinite;
 }
 
 .marquee-container:hover .marquee-content {
   animation-play-state: paused;
+}
+
+/* Custom Text Gradients */
+.gradient-text {
+  background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-mode) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.4s ease;
+}
+
+/* Button Styling */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--accent-mode);
+  color: #fff;
+  padding: 14px 28px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+  border: 1px solid var(--accent-mode);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px var(--accent-mode-glow);
+}
+
+.btn-primary:hover {
+  background: transparent;
+  color: var(--accent-mode);
+  box-shadow: none;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  color: var(--text-primary);
+  padding: 14px 28px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+  border: 1px solid var(--border-light);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: var(--text-primary);
+}
+
+/* Image styling */
+.img-luxury-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--card-shadow);
+  transition: all 0.5s ease;
+}
+
+.img-luxury-container:hover {
+  border-color: var(--accent-mode);
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px -12px var(--accent-mode-glow);
 }

@@ -8,34 +8,42 @@ import Footer from "./components/Footer";
 import CustomCursor from "./components/CustomCursor";
 
 export default function App() {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "dark";
+  });
+  const [activeMode, setActiveMode] = useState("fullstack"); // modes: fullstack, aiml, security, data
 
+  // Sync theme with HTML attribute
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.setAttribute("data-theme", savedTheme);
-    }
-  }, []);
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
+
+  // Update root container class based on active mode
+  useEffect(() => {
+    const root = document.documentElement;
+    // Remove previous mode classes
+    root.classList.remove("mode-fullstack", "mode-aiml", "mode-security", "mode-data");
+    // Add current active mode class
+    root.classList.add(`mode-${activeMode}`);
+  }, [activeMode]);
 
   const toggleTheme = () => {
     const newTheme = theme === "dark" ? "light" : "dark";
     setTheme(newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme);
     localStorage.setItem("theme", newTheme);
   };
 
   return (
     <>
       <CustomCursor />
-      <Navbar theme={theme} toggleTheme={toggleTheme} />
+      <Navbar theme={theme} toggleTheme={toggleTheme} activeMode={activeMode} />
       <main>
-        <Hero />
-        <Skills />
-        <Projects />
-        <Contact />
+        <Hero activeMode={activeMode} setActiveMode={setActiveMode} />
+        <Skills activeMode={activeMode} />
+        <Projects activeMode={activeMode} />
+        <Contact activeMode={activeMode} />
       </main>
-      <Footer />
+      <Footer activeMode={activeMode} />
     </>
   );
 }
