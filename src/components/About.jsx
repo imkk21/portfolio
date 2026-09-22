@@ -18,10 +18,6 @@ export default function About() {
       gsap.to(o, { v: Number(end), duration: 1.6, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%", once: true },
         onUpdate: () => { num.textContent = o.v.toFixed(Number(decimals)); } });
     });
-
-    gsap.utils.toArray("[data-reveal]").forEach((el) => {
-      gsap.from(el, { y: 32, opacity: 0, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 90%" } });
-    });
   }, { scope: root });
 
   return (

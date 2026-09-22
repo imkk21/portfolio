@@ -24,10 +24,16 @@ export default function App() {
     lenis.start();
     // Generic scroll reveal for anything tagged data-reveal.
     gsap.utils.toArray("[data-reveal]").forEach((el) => {
-      gsap.from(el, { y: 50, opacity: 0, duration: 1.1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%" } });
+      gsap.fromTo(el, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1.1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%" } });
     });
     gsap.to(".progress", { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.3 } });
+    // Late-loading fonts and images change page height, which invalidates trigger positions.
     document.fonts.ready.then(() => ScrollTrigger.refresh());
+    const imgs = gsap.utils.toArray("img");
+    let left = imgs.filter((i) => !i.complete).length;
+    if (!left) ScrollTrigger.refresh();
+    imgs.forEach((i) => i.complete || i.addEventListener("load", () => { if (--left <= 0) ScrollTrigger.refresh(); }, { once: true }));
+    window.addEventListener("load", () => ScrollTrigger.refresh(), { once: true });
   }, { dependencies: [ready] });
 
   return (
