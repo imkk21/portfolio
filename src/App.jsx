@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { gsap, ScrollTrigger, useGSAP, lenis } from "./lib/smooth";
+import { useTheme } from "./lib/theme";
 import Preloader from "./components/Preloader";
 import Cursor from "./components/Cursor";
 import Nav from "./components/Nav";
@@ -15,6 +16,7 @@ import Footer from "./components/Footer";
 
 export default function App() {
   const [ready, setReady] = useState(false);
+  const [theme, toggleTheme] = useTheme();
   const main = useRef(null);
 
   useGSAP(() => {
@@ -33,14 +35,14 @@ export default function App() {
       {!ready && <Preloader onDone={() => setReady(true)} />}
       <div className="progress" aria-hidden="true" />
       <Cursor />
-      <Nav />
+      <Nav theme={theme} toggleTheme={toggleTheme} />
       <main ref={main}>
-        <Hero ready={ready} />
+        <Hero ready={ready} theme={theme} />
         <Marquee />
         <About />
         <Experience />
         <Projects />
-        <Skills />
+        <Skills theme={theme} />
         <Education />
         <Contact />
       </main>

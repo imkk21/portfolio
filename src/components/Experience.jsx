@@ -16,7 +16,7 @@ export default function Experience() {
   }, { scope: root });
 
   return (
-    <section ref={root} id="experience">
+    <section ref={root} id="experience" className="tinted">
       <div className="wrap">
         <div className="sec-head">
           <span className="eyebrow">Experience</span>

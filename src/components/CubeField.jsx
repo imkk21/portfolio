@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { cssVar } from "../lib/theme";
 
 // A grid of instanced columns that ripple like a live data heatmap and rise under the pointer.
 function Field({ n, accent }) {
@@ -11,7 +12,7 @@ function Field({ n, accent }) {
   const pointer = useRef(new THREE.Vector2(-10, -10));
   const { dummy, base, hot, tmp, plane } = useMemo(() => ({
     dummy: new THREE.Object3D(),
-    base: new THREE.Color("#3c3c48"),
+    base: new THREE.Color(cssVar("--cube-base", "#3c3c48")),
     hot: new THREE.Color(accent),
     tmp: new THREE.Color(),
     plane: new THREE.Plane(new THREE.Vector3(0, 1, 0), 0),
@@ -65,17 +66,18 @@ function Field({ n, accent }) {
   );
 }
 
-export default function CubeField() {
+export default function CubeField({ theme }) {
   const n = typeof window !== "undefined" && window.innerWidth < 900 ? 22 : 34;
-  const accent = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#a07cff";
+  const accent = cssVar("--accent", "#4f46e5");
+  const sceneBg = cssVar("--scene-bg", "#fbfbf9");
   return (
     <Canvas dpr={[1, 1.5]} camera={{ position: [0, 8, 12], fov: 42 }} gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}>
-      <fog attach="fog" args={["#08080a", 11, 24]} />
-      <ambientLight intensity={1.5} />
-      <directionalLight position={[6, 12, 5]} intensity={2.6} />
-      <directionalLight position={[-8, 5, -6]} intensity={1.1} color={accent} />
-      <pointLight position={[-5, 5, -3]} intensity={45} color={accent} />
-      <Field n={n} accent={accent} />
+      <fog attach="fog" args={[sceneBg, 11, 24]} />
+      <ambientLight intensity={1.15} />
+      <directionalLight position={[6, 12, 5]} intensity={1.7} />
+      <directionalLight position={[-8, 5, -6]} intensity={0.8} color={accent} />
+      <pointLight position={[-5, 5, -3]} intensity={32} color={accent} />
+      <Field key={theme} n={n} accent={accent} />
     </Canvas>
   );
 }

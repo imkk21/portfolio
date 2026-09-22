@@ -10,7 +10,7 @@ const CubeField = lazy(() => import("./CubeField"));
 
 const ICONS = { GitHub: <FaGithub size={16} />, LinkedIn: <FaLinkedin size={16} />, LeetCode: <SiLeetcode size={16} /> };
 
-export default function Hero({ ready }) {
+export default function Hero({ ready, theme }) {
   const root = useRef(null);
 
   useGSAP(() => {
@@ -49,7 +49,7 @@ export default function Hero({ ready }) {
               Spring Boot analytics APIs on MySQL and ClickHouse for a mobile attribution platform at {PROFILE.company} — query performance, API security and the integrations that have to work.
             </p>
             <div className="hero-cta">
-              <a href="#work" className="btn btn-solid" onClick={(e) => { e.preventDefault(); scrollTo("#work"); }}>View my work <ArrowRight size={15} /></a>
+              <a href="#work" className="btn btn-accent" onClick={(e) => { e.preventDefault(); scrollTo("#work"); }}>View my work <ArrowRight size={15} /></a>
               <a href={PROFILE.resume} download className="btn btn-line"><Download size={15} /> Download resume</a>
             </div>
             <div className="hero-socials">
@@ -65,7 +65,7 @@ export default function Hero({ ready }) {
             </div>
           </div>
 
-          <div className="hero-3d"><Suspense fallback={null}><CubeField /></Suspense></div>
+          <div className="hero-3d"><Suspense fallback={null}><CubeField theme={theme} /></Suspense></div>
         </div>
       </div>
     </section>

@@ -51,7 +51,7 @@ export default function Contact() {
               <div className="field"><label className="label" htmlFor="name">Name</label><input id="name" name="name" required autoComplete="name" placeholder="Your name" /></div>
               <div className="field"><label className="label" htmlFor="email">Email</label><input id="email" name="email" type="email" required autoComplete="email" placeholder="you@company.com" /></div>
               <div className="field"><label className="label" htmlFor="message">Message</label><textarea id="message" name="message" rows="4" required placeholder="What are you building?" /></div>
-              <button type="submit" className="btn btn-solid" disabled={status === "sending" || status === "sent"}>
+              <button type="submit" className="btn btn-accent" disabled={status === "sending" || status === "sent"}>
                 {status === "sending" ? "Sending…" : status === "sent" ? "Sent — talk soon" : <>Send message <ArrowUpRight size={15} /></>}
               </button>
               {status === "error" && <p className="form-msg" style={{ color: "#ff7a7a" }}>Couldn&apos;t send — email me directly instead.</p>}

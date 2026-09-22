@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Moon, Sun } from "lucide-react";
 import { gsap, useGSAP, lenis, scrollTo } from "../lib/smooth";
 import { PROFILE } from "../data";
 
@@ -10,7 +11,7 @@ const LINKS = [
   { label: "Education", to: "#education" },
 ];
 
-export default function Nav() {
+export default function Nav({ theme, toggleTheme }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menu = useRef(null);
@@ -47,15 +48,20 @@ export default function Nav() {
     <>
       <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
         <div className="nav-in">
-          <a href="#top" className="nav-logo" onClick={(e) => go(e, 0)}>
-            <span className="mark">KK</span> {PROFILE.name}
-          </a>
-          <div className="nav-links">
-            {LINKS.map((l) => <a key={l.label} href={l.to} onClick={(e) => go(e, l.to)}>{l.label}</a>)}
-          </div>
-          <div className="nav-right">
-            <a href="#contact" className="nav-cta" onClick={(e) => go(e, "#contact")}>Get in touch</a>
-            <button className={`nav-burger ${open ? "open" : ""}`} onClick={toggle} aria-label="Menu" aria-expanded={open}><i /><i /></button>
+          <div className="nav-bar">
+            <a href="#top" className="nav-logo" onClick={(e) => go(e, 0)}>
+              <span className="mark">KK</span> {PROFILE.name}
+            </a>
+            <div className="nav-links">
+              {LINKS.map((l) => <a key={l.label} href={l.to} onClick={(e) => go(e, l.to)}>{l.label}</a>)}
+            </div>
+            <div className="nav-right">
+              <button className="theme-btn" onClick={toggleTheme} aria-label="Toggle theme">
+                {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
+              </button>
+              <a href="#contact" className="nav-cta" onClick={(e) => go(e, "#contact")}>Get in touch</a>
+              <button className={`nav-burger ${open ? "open" : ""}`} onClick={toggle} aria-label="Menu" aria-expanded={open}><i /><i /></button>
+            </div>
           </div>
         </div>
       </nav>

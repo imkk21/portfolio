@@ -1,6 +1,7 @@
 import { lazy, Suspense, useState } from "react";
 import { SKILLS } from "../data";
 import ICONS from "../lib/icons.json";
+import { readableHex } from "../lib/theme";
 
 const TechGlobe = lazy(() => import("./TechGlobe"));
 
@@ -9,11 +10,13 @@ const ALIAS = { "Spring Boot": "Spring Boot", "Spring Data JPA / Hibernate": "Hi
 const BY_LABEL = Object.fromEntries(ICONS.map((i) => [i.label, i]));
 const iconFor = (skill) => BY_LABEL[ALIAS[skill] || skill] || null;
 
-export default function Skills() {
+export default function Skills({ theme }) {
   const [focus, setFocus] = useState(null);
+  // theme is in the key so chip colours re-resolve when the palette flips
+  void theme;
 
   return (
-    <section id="skills">
+    <section id="skills" className="tinted">
       <div className="wrap">
         <div className="sec-head">
           <span className="eyebrow">Skills</span>
@@ -23,7 +26,7 @@ export default function Skills() {
 
         <div className="skills-grid">
           <Suspense fallback={<div className="globe" />}>
-            <TechGlobe focus={focus} />
+            <TechGlobe focus={focus} theme={theme} />
           </Suspense>
 
           <div className="skill-groups">
@@ -41,7 +44,7 @@ export default function Skills() {
                         key={s}
                         type="button"
                         className={`skill ${icon ? "live" : "plain"} ${focus && icon && focus === icon.label ? "on" : ""}`}
-                        style={icon ? { "--c": icon.hex } : undefined}
+                        style={icon ? { "--c": readableHex(icon.hex) } : undefined}
                         onMouseEnter={() => icon && setFocus(icon.label)}
                         onMouseLeave={() => setFocus(null)}
                         onClick={() => icon && setFocus(focus === icon.label ? null : icon.label)}

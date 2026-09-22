@@ -39,7 +39,7 @@ export default function Projects() {
                 <p className="desc">{p.description}</p>
                 <div className="tags">{p.stack.map((t) => <span key={t} className="tag">{t}</span>)}</div>
                 <div className="show-links">
-                  {p.live && <a href={p.live} className="btn btn-solid" target="_blank" rel="noopener noreferrer">Visit site <ArrowUpRight size={15} /></a>}
+                  {p.live && <a href={p.live} className="btn btn-accent" target="_blank" rel="noopener noreferrer">Visit site <ArrowUpRight size={15} /></a>}
                   {p.github && <a href={p.github} className="btn btn-line" target="_blank" rel="noopener noreferrer"><FaGithub size={15} /> Source</a>}
                 </div>
               </div>

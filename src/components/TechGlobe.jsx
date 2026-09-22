@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import ICONS from "../lib/icons.json";
+import { cssVar, readableHex } from "../lib/theme";
 
 const R = 2.9;
 
@@ -21,8 +22,8 @@ function makeTexture(node, mode) {
   const ctx = c.getContext("2d");
   const lit = mode !== "dim";
 
-  ctx.fillStyle = lit ? "rgba(255,255,255,0.10)" : "rgba(255,255,255,0.045)";
-  ctx.strokeStyle = lit ? node.hex + "88" : "rgba(255,255,255,0.10)";
+  ctx.fillStyle = lit ? cssVar("--tile", "rgba(255,255,255,0.07)") : cssVar("--tile", "rgba(255,255,255,0.07)");
+  ctx.strokeStyle = lit ? readableHex(node.hex) + "88" : cssVar("--tile-line", "rgba(255,255,255,0.12)");
   ctx.lineWidth = lit ? 3 : 2;
   ctx.beginPath();
   ctx.roundRect(PAD, PAD, BOX, BOX, 38);
@@ -30,7 +31,7 @@ function makeTexture(node, mode) {
   ctx.stroke();
 
   // Brand colour when lit, muted grey when dim.
-  ctx.fillStyle = lit ? node.hex : "rgba(255,255,255,0.5)";
+  ctx.fillStyle = lit ? readableHex(node.hex) : cssVar("--fg-3", "#8b8b94");
   const G = 92;
   if (node.text) {
     ctx.font = "600 40px Geist, system-ui, sans-serif";
@@ -57,7 +58,7 @@ const shortest = (a, b) => {
   return d;
 };
 
-function Scene({ focus, onHover, accent }) {
+function Scene({ focus, onHover, accent, theme }) {
   const group = useRef(null);
   const spin = useRef(0.0022);
   const drag = useRef(null);
@@ -66,7 +67,8 @@ function Scene({ focus, onHover, accent }) {
 
   const items = useMemo(
     () => LAYOUT.map(({ node, pos }) => ({ node, pos, dim: makeTexture(node, "dim"), lit: makeTexture(node, "lit") })),
-    []
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [theme]
   );
 
   // Where the group must rotate so the focused icon faces the camera.
@@ -144,9 +146,9 @@ function Icon({ item, focus, onHover }) {
   );
 }
 
-export default function TechGlobe({ focus, onHover }) {
+export default function TechGlobe({ focus, onHover, theme }) {
   const [hover, setHover] = useState(null);
-  const accent = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#7c6af7";
+  const accent = cssVar("--accent", "#4f46e5");
   const shown = hover || focus;
   const node = shown && ICONS.find((n) => n.label === shown);
 
@@ -155,10 +157,10 @@ export default function TechGlobe({ focus, onHover }) {
   return (
     <div className="globe">
       <Canvas dpr={[1, 1.75]} camera={{ position: [0, 0, 10.2], fov: 42 }} gl={{ antialias: true, alpha: true }}>
-        <Scene focus={shown || null} onHover={setHover} accent={accent} />
+        <Scene key={theme} focus={shown || null} onHover={setHover} accent={accent} theme={theme} />
       </Canvas>
-      <div className="globe-name" style={node ? { borderColor: node.hex + "66" } : undefined}>
-        <span className="sw" style={node ? { background: node.hex } : undefined} />
+      <div className="globe-name" style={node ? { borderColor: readableHex(node.hex) + "66" } : undefined}>
+        <span className="sw" style={node ? { background: readableHex(node.hex) } : undefined} />
         {shown || "Drag to spin · hover a skill"}
       </div>
     </div>
