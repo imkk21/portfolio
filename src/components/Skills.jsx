@@ -1,41 +1,58 @@
-import { lazy, Suspense } from "react";
-import { SKILLS, PROFILE } from "../data";
+import { lazy, Suspense, useState } from "react";
+import { SKILLS } from "../data";
+import ICONS from "../lib/icons.json";
 
 const TechGlobe = lazy(() => import("./TechGlobe"));
 
-// Pointer position feeds the CSS spotlight (--mx/--my).
-const spot = (e) => {
-  const r = e.currentTarget.getBoundingClientRect();
-  e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
-  e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
-};
+// Skill label -> globe icon label, so hovering a chip can drive the globe.
+const ALIAS = { "Spring Boot": "Spring Boot", "Spring Data JPA / Hibernate": "Hibernate", "JavaScript (ES6+)": "JavaScript", "Tailwind CSS": "Tailwind", "Shell Scripting": "Linux", "Python": "Python" };
+const BY_LABEL = Object.fromEntries(ICONS.map((i) => [i.label, i]));
+const iconFor = (skill) => BY_LABEL[ALIAS[skill] || skill] || null;
 
 export default function Skills() {
+  const [focus, setFocus] = useState(null);
+
   return (
-    <section id="skills" className="wrap">
-      <div className="sec-head" data-reveal>
-        <span className="sec-idx">05 — Skills</span>
-        <h2 className="sec-title">Tool<em>kit.</em></h2>
-        <p className="sec-sub">Backend-first, with enough cloud, DevOps and frontend to ship the whole thing. Spin the globe.</p>
-      </div>
+    <section id="skills">
+      <div className="wrap">
+        <div className="sec-head">
+          <span className="eyebrow">Skills</span>
+          <h2>The stack I reach for, <em>day to day.</em></h2>
+          <p>Backend first, with enough cloud and frontend to ship the whole thing. Hover a skill to find it on the globe — or drag the globe around.</p>
+        </div>
 
-      <div className="skills-split">
-        <Suspense fallback={<div className="globe" />}><TechGlobe /></Suspense>
+        <div className="skills-grid">
+          <Suspense fallback={<div className="globe" />}>
+            <TechGlobe focus={focus} />
+          </Suspense>
 
-        <div className="bento">
-          {SKILLS.map((g, i) => (
-            <div key={g.title} className="cell" style={{ "--span": g.span }} onPointerMove={spot} data-reveal>
-              <div className="cell-head">
-                <h3>{g.title}</h3>
-                <span className="label">0{i + 1}</span>
+          <div className="skill-groups">
+            {SKILLS.map((g, i) => (
+              <div key={g.title}>
+                <div className="sg-head">
+                  <h3>{g.title}</h3>
+                  <span className="n">{String(i + 1).padStart(2, "0")}</span>
+                </div>
+                <div className="tags">
+                  {g.items.map((s) => {
+                    const icon = iconFor(s);
+                    return (
+                      <button
+                        key={s}
+                        type="button"
+                        className={`skill ${icon ? "live" : "plain"} ${focus && icon && focus === icon.label ? "on" : ""}`}
+                        style={icon ? { "--c": icon.hex } : undefined}
+                        onMouseEnter={() => icon && setFocus(icon.label)}
+                        onMouseLeave={() => setFocus(null)}
+                        onClick={() => icon && setFocus(focus === icon.label ? null : icon.label)}
+                      >
+                        {s}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-              <div className="tags">{g.items.map((s) => <span key={s} className="tag">{s}</span>)}</div>
-            </div>
-          ))}
-          <div className="cell now" style={{ "--span": 6 }} data-reveal>
-            <span className="label">Currently</span>
-            <p>Building Spring Boot analytics APIs on MySQL + ClickHouse at {PROFILE.company}.</p>
-            <span className="live"><i /> Shipping in production</span>
+            ))}
           </div>
         </div>
       </div>

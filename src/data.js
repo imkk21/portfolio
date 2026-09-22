@@ -18,7 +18,7 @@ export const PROFILE = {
 };
 
 // Words that cycle in the hero: "I build ___"
-export const ROTATOR = ["scalable REST APIs.", "ClickHouse analytics pipelines.", "OAuth 2.0 integrations.", "systems that stay up."];
+export const ROTATOR = ["scalable REST APIs.", "analytics pipelines.", "OAuth 2.0 integrations.", "systems that stay up."];
 
 export const MANIFESTO =
   "I'm a backend developer at Attrivo in Bengaluru, building Spring Boot analytics APIs on MySQL and ClickHouse for a mobile attribution platform. I care about query performance, API security and integrations that don't break at 3am. MCA from VIT, with full-stack projects across React, Node.js and LLM APIs.";
@@ -146,7 +146,7 @@ export const SKILLS = [
   { title: "AI & Other", span: 6, items: ["Python", "Google Gemini API", "LLM API Integration", "Prompt Engineering", "LangChain", "RAG (basics)", "GitHub Copilot"] },
 ];
 
-export const MARQUEE = ["Java", "Spring Boot", "MySQL", "ClickHouse", "AWS", "REST APIs", "OAuth 2.0", "Docker", "React", "Node.js", "PostgreSQL", "GitHub Actions", "Linux"];
+export const MARQUEE = ["Java", "Spring Boot", "MySQL", "ClickHouse", "AWS", "REST API Design", "OAuth 2.0", "Docker", "React", "Node.js", "PostgreSQL", "GitHub Actions", "Linux"];
 
 export const EDUCATION = [
   { degree: "Master of Computer Applications", short: "MCA", school: "Vellore Institute of Technology", period: "2024 — 2026" },
@@ -163,68 +163,4 @@ export const ACHIEVEMENTS = [
   { name: "TCS CodeVita Season 13", note: "Round 2 Finalist" },
   { name: "TCS HackQuest Season 10", note: "Round 2 Finalist" },
   { name: "Nokia “Accelerate Her in Tech” Hackathon", note: "Round 2 Finalist" },
-];
-
-// Mocked endpoints for the interactive API console.
-export const ENDPOINTS = [
-  {
-    method: "GET",
-    path: "/v1/analytics/campaigns",
-    note: "Paginated report",
-    engine: "ClickHouse",
-    ms: 42,
-    response: {
-      page: 1, per_page: 2, total: 1284,
-      rows_scanned: 8914,
-      data: [
-        { campaign: "spring_sale_in", installs: 12480, roas: 3.42, arpu: 1.86, ctr: 0.071 },
-        { campaign: "retarget_apac", installs: 8310, roas: 2.17, arpu: 1.24, ctr: 0.055 },
-      ],
-    },
-  },
-  {
-    method: "POST",
-    path: "/v1/oauth/meta/callback",
-    note: "Token exchange",
-    engine: "MySQL",
-    ms: 128,
-    response: {
-      status: "linked",
-      provider: "meta",
-      account_id: "act_8891204",
-      scopes: ["ads_read", "read_insights"],
-      token: { stored: true, expires_in: 5184000, rotated: true },
-    },
-  },
-  {
-    method: "GET",
-    path: "/v1/segments/breakdown",
-    note: "Group-by dimensions",
-    engine: "ClickHouse",
-    ms: 61,
-    response: {
-      dimension: "geo",
-      window: "last_7d",
-      data: [
-        { geo: "IN", sessions: 412903, arpu: 0.94 },
-        { geo: "US", sessions: 96210, arpu: 4.31 },
-        { geo: "ID", sessions: 74655, arpu: 0.52 },
-      ],
-    },
-  },
-  {
-    method: "GET",
-    path: "/actuator/health",
-    note: "Liveness probe",
-    engine: "Spring Boot",
-    ms: 6,
-    response: {
-      status: "UP",
-      components: {
-        db: { status: "UP", details: { database: "MySQL", validationQuery: "isValid()" } },
-        clickhouse: { status: "UP", details: { ping: "3ms" } },
-        diskSpace: { status: "UP" },
-      },
-    },
-  },
 ];

@@ -11,7 +11,7 @@ function Field({ n, accent }) {
   const pointer = useRef(new THREE.Vector2(-10, -10));
   const { dummy, base, hot, tmp, plane } = useMemo(() => ({
     dummy: new THREE.Object3D(),
-    base: new THREE.Color("#242424"),
+    base: new THREE.Color("#3c3c48"),
     hot: new THREE.Color(accent),
     tmp: new THREE.Color(),
     plane: new THREE.Plane(new THREE.Vector3(0, 1, 0), 0),
@@ -38,7 +38,7 @@ function Field({ n, accent }) {
     for (let ix = 0; ix < n; ix++) {
       for (let iz = 0; iz < n; iz++) {
         const px = (ix - n / 2) * gap, pz = (iz - n / 2) * gap;
-        const wave = (Math.sin(px * 0.8 + t * 1.1) + Math.cos(pz * 0.8 + t * 0.9)) * 0.22 + 0.5;
+        const wave = (Math.sin(px * 0.7 + t * 0.9) + Math.cos(pz * 0.7 + t * 0.75)) * 0.34 + 0.72;
         const d = Math.hypot(px - hover.current.x, pz - hover.current.z);
         const bump = Math.max(0, 1 - d / 2.4);
         const h = wave + bump * bump * 2.2;
@@ -46,7 +46,7 @@ function Field({ n, accent }) {
         dummy.scale.set(1, h, 1);
         dummy.updateMatrix();
         mesh.current.setMatrixAt(i, dummy.matrix);
-        tmp.copy(base).lerp(hot, Math.min(1, Math.pow((h - 0.28) / 2.4, 1.4)));
+        tmp.copy(base).lerp(hot, Math.min(1, Math.pow(Math.max(0, h - 0.4) / 2.2, 1.25)));
         mesh.current.setColorAt(i, tmp);
         i++;
       }
@@ -59,7 +59,7 @@ function Field({ n, accent }) {
     <group ref={group} rotation={[0, Math.PI / 4.4, 0]} scale={1.15}>
       <instancedMesh ref={mesh} args={[undefined, undefined, n * n]}>
         <boxGeometry args={[gap * 0.62, 1, gap * 0.62]} />
-        <meshStandardMaterial roughness={0.35} metalness={0.4} />
+        <meshStandardMaterial roughness={0.55} metalness={0.15} />
       </instancedMesh>
     </group>
   );
@@ -70,10 +70,11 @@ export default function CubeField() {
   const accent = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#a07cff";
   return (
     <Canvas dpr={[1, 1.5]} camera={{ position: [0, 8, 12], fov: 42 }} gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}>
-      <fog attach="fog" args={["#0a0a0a", 10, 22]} />
-      <ambientLight intensity={0.9} />
-      <directionalLight position={[6, 12, 4]} intensity={2.2} />
-      <pointLight position={[-6, 6, -4]} intensity={30} color={accent} />
+      <fog attach="fog" args={["#08080a", 11, 24]} />
+      <ambientLight intensity={1.5} />
+      <directionalLight position={[6, 12, 5]} intensity={2.6} />
+      <directionalLight position={[-8, 5, -6]} intensity={1.1} color={accent} />
+      <pointLight position={[-5, 5, -3]} intensity={45} color={accent} />
       <Field n={n} accent={accent} />
     </Canvas>
   );

@@ -4,7 +4,7 @@ export default function Marquee() {
   return (
     <div className="marquee" aria-hidden="true">
       <div className="marquee-track">
-        {[...MARQUEE, ...MARQUEE].map((t, i) => <span key={i}>{t} <i>✦</i></span>)}
+        {[...MARQUEE, ...MARQUEE].map((t, i) => <span key={i}>{t}<i /></span>)}
       </div>
     </div>
   );
