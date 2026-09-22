@@ -71,20 +71,24 @@ export const EXPERIENCE = [
 export const PROJECTS = [
   {
     name: "Insightify",
+    shot: "/shots/insightify.jpg",
     tagline: "AI-Powered Developer Intelligence Dashboard",
     description: "Developer productivity portal unifying GitHub analytics, live weather and tech news. Full React frontend with Firebase Auth, Node.js/MongoDB Atlas backend, and Gemini API for personalized weekly insights.",
     stack: ["React", "Node.js", "MongoDB Atlas", "Firebase Auth", "Gemini API"],
     live: "https://insightifyweb.vercel.app",
     github: "https://github.com/imkk21/Insightify",
+    featured: true,
     hue: 265,
   },
   {
     name: "DevSync",
+    shot: "/shots/devsync.jpg",
     tagline: "Real-Time Collaborative Cloud IDE",
     description: "Real-time collaborative code editor on Supabase live data. Judge0 integration for sandboxed execution in 10+ languages with sub-2-second feedback, so multiple developers can edit and run code together in the browser.",
     stack: ["JavaScript", "Supabase", "Judge0 API", "Docker"],
     live: "https://devsyncide.vercel.app",
     github: "https://github.com/imkk21/DevSync",
+    featured: true,
     hue: 200,
   },
   {
@@ -97,6 +101,7 @@ export const PROJECTS = [
   },
   {
     name: "AI Code Reviewer",
+    shot: "/shots/aireviewer.jpg",
     tagline: "LLM-Assisted Pull Request Review",
     description: "Fuses static rules (SQL injection, hardcoded secrets) with Gemini structured output, returning validated JSON with severity, explanation and suggested fixes.",
     stack: ["Python", "FastAPI", "Gemini API", "Pydantic", "Docker"],
@@ -106,6 +111,7 @@ export const PROJECTS = [
   },
   {
     name: "ShareItz",
+    shot: "/shots/shareitz.jpg",
     tagline: "Instant Text Sharing",
     description: "Zero sign-up, TypeScript-first platform for instant copy-paste text sharing using Firebase real-time sync.",
     stack: ["Next.js", "TypeScript", "Tailwind CSS", "Firebase"],
@@ -123,6 +129,7 @@ export const PROJECTS = [
   },
   {
     name: "Steam Market Analytics",
+    shot: "/shots/steam.jpg",
     tagline: "Tableau Data Visualization",
     description: "Analyzed 125K+ Steam games to surface pricing, engagement and genre trends in an interactive Tableau dashboard.",
     stack: ["Tableau", "Data Analysis"],
@@ -132,11 +139,11 @@ export const PROJECTS = [
 ];
 
 export const SKILLS = [
-  { title: "Backend", span: 4, items: ["Java", "Spring Boot", "Spring Data JPA / Hibernate", "REST API Design", "OAuth 2.0", "API Security", "Node.js", "FastAPI"] },
-  { title: "Databases", span: 2, items: ["MySQL", "ClickHouse", "PostgreSQL", "MongoDB", "SQLite", "Supabase"] },
+  { title: "Backend", span: 3, items: ["Java", "Spring Boot", "Spring Data JPA / Hibernate", "REST API Design", "OAuth 2.0", "API Security", "Node.js", "FastAPI"] },
+  { title: "Databases", span: 3, items: ["MySQL", "ClickHouse", "PostgreSQL", "MongoDB", "SQLite", "Supabase"] },
   { title: "Cloud & DevOps", span: 3, items: ["AWS", "Docker", "GitHub Actions", "Linux", "Shell Scripting", "Git", "Maven", "Postman", "Firebase"] },
   { title: "Frontend", span: 3, items: ["React", "Next.js", "TypeScript", "JavaScript (ES6+)", "Angular", "HTML / CSS", "Tailwind CSS"] },
-  { title: "AI & Other", span: 4, items: ["Python", "Google Gemini API", "LLM API Integration", "Prompt Engineering", "LangChain", "RAG (basics)", "GitHub Copilot"] },
+  { title: "AI & Other", span: 6, items: ["Python", "Google Gemini API", "LLM API Integration", "Prompt Engineering", "LangChain", "RAG (basics)", "GitHub Copilot"] },
 ];
 
 export const MARQUEE = ["Java", "Spring Boot", "MySQL", "ClickHouse", "AWS", "REST APIs", "OAuth 2.0", "Docker", "React", "Node.js", "PostgreSQL", "GitHub Actions", "Linux"];
@@ -156,4 +163,68 @@ export const ACHIEVEMENTS = [
   { name: "TCS CodeVita Season 13", note: "Round 2 Finalist" },
   { name: "TCS HackQuest Season 10", note: "Round 2 Finalist" },
   { name: "Nokia “Accelerate Her in Tech” Hackathon", note: "Round 2 Finalist" },
+];
+
+// Mocked endpoints for the interactive API console.
+export const ENDPOINTS = [
+  {
+    method: "GET",
+    path: "/v1/analytics/campaigns",
+    note: "Paginated report",
+    engine: "ClickHouse",
+    ms: 42,
+    response: {
+      page: 1, per_page: 2, total: 1284,
+      rows_scanned: 8914,
+      data: [
+        { campaign: "spring_sale_in", installs: 12480, roas: 3.42, arpu: 1.86, ctr: 0.071 },
+        { campaign: "retarget_apac", installs: 8310, roas: 2.17, arpu: 1.24, ctr: 0.055 },
+      ],
+    },
+  },
+  {
+    method: "POST",
+    path: "/v1/oauth/meta/callback",
+    note: "Token exchange",
+    engine: "MySQL",
+    ms: 128,
+    response: {
+      status: "linked",
+      provider: "meta",
+      account_id: "act_8891204",
+      scopes: ["ads_read", "read_insights"],
+      token: { stored: true, expires_in: 5184000, rotated: true },
+    },
+  },
+  {
+    method: "GET",
+    path: "/v1/segments/breakdown",
+    note: "Group-by dimensions",
+    engine: "ClickHouse",
+    ms: 61,
+    response: {
+      dimension: "geo",
+      window: "last_7d",
+      data: [
+        { geo: "IN", sessions: 412903, arpu: 0.94 },
+        { geo: "US", sessions: 96210, arpu: 4.31 },
+        { geo: "ID", sessions: 74655, arpu: 0.52 },
+      ],
+    },
+  },
+  {
+    method: "GET",
+    path: "/actuator/health",
+    note: "Liveness probe",
+    engine: "Spring Boot",
+    ms: 6,
+    response: {
+      status: "UP",
+      components: {
+        db: { status: "UP", details: { database: "MySQL", validationQuery: "isValid()" } },
+        clickhouse: { status: "UP", details: { ping: "3ms" } },
+        diskSpace: { status: "UP" },
+      },
+    },
+  },
 ];

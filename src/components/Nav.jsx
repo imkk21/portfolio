@@ -6,6 +6,7 @@ import { PROFILE } from "../data";
 const LINKS = [
   { label: "About", to: "#about" },
   { label: "Experience", to: "#experience" },
+  { label: "API", to: "#api" },
   { label: "Work", to: "#work" },
   { label: "Skills", to: "#skills" },
   { label: "Contact", to: "#contact" },

@@ -5,7 +5,7 @@ export default function Education() {
   return (
     <section id="education" className="wrap">
       <div className="sec-head" data-reveal>
-        <span className="sec-idx">05 — Background</span>
+        <span className="sec-idx">06 — Background</span>
         <h2 className="sec-title">Edu<em>cation.</em></h2>
       </div>
 

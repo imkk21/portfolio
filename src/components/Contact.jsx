@@ -35,7 +35,7 @@ export default function Contact() {
 
   return (
     <section ref={root} id="contact" className="wrap contact">
-      <span className="sec-idx" data-reveal>06 — Contact</span>
+      <span className="sec-idx" data-reveal>07 — Contact</span>
       <h2 className="contact-title" style={{ marginTop: 16 }}>
         <span className="mask"><Chars text="Let's" /></span>
         <span className="mask"><Chars text="talk." /></span>
